@@ -15,8 +15,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import adelgrimm.sckw_news_ticker.mainActivity.MainActivity;
 import adelgrimm.sckw_news_ticker.R;
+import adelgrimm.sckw_news_ticker.mainActivity.MainActivity;
 
 /**
  * A fragment representing a list of Items.
@@ -33,7 +33,7 @@ public class AktivenNewsFragment extends Fragment implements AbsListView.OnItemC
     // TODO: For TheNews!!!!
 //    private OnFragmentInteractionListener mListener;
 
-    String[] titles, text;
+    String[] titles, text, pubDate;
     /**
      * The fragment's ListView/GridView.
      */
@@ -57,18 +57,19 @@ public class AktivenNewsFragment extends Fragment implements AbsListView.OnItemC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         listItemList = new ArrayList();
-        if (((MainActivity) getActivity()).getTitlesForAktive() != null && ((MainActivity) getActivity()).getTextForAktive() != null) {
+        if (((MainActivity) getActivity()).getTitlesForAktive() != null && ((MainActivity) getActivity()).getTextForAktive() != null && ((MainActivity) getActivity()).getPubDateForAktive() != null) {
             titles = ((MainActivity) getActivity()).getTitlesForAktive();
             text = ((MainActivity) getActivity()).getTextForAktive();
+            pubDate = ((MainActivity) getActivity()).getPubDateForAktive();
             setupListView();
         } else {
-            listItemList.add(new MyListItem("Loading...", "Swipe Down for Update"));
+            listItemList.add(new MyListItem("Loading...", "Swipe Down for Update", "09-Jul-2015"));
         }
     }
 
     private void setupListView() {
         for (int i = 0; i < titles.length; i++) {
-            listItemList.add(new MyListItem(titles[i], (text[i]).substring(0, 75) + "..."));
+            listItemList.add(new MyListItem(titles[i], (text[i]).substring(0, 75) + "...", pubDate[i]));
         }
         mAdapter = new MyListAdapter(getActivity(), listItemList);
     }

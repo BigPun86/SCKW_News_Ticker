@@ -14,12 +14,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import static adelgrimm.sckw_news_ticker.dataModel.TransformHTMLText.dateParser;
+
 public class HandleXML {
     public volatile boolean parsingComplete = true;
-    private int newsTitles, newsDescriptions, newsImage = 0;
+    private int countTitles, countDescriptions, countImage, countPubDate = 0;
     private ArrayList<String> listTitles = new ArrayList<String>();
     private ArrayList<String> listDesc = new ArrayList<String>();
     private ArrayList<String> listImages = new ArrayList<String>();
+    private ArrayList<String> listPubDate = new ArrayList<String>();
     private String urlString = null;
     private XmlPullParserFactory xmlFactoryObject;
 
@@ -31,6 +34,14 @@ public class HandleXML {
         return listImages;
     }
 
+    public void setListPubDate(ArrayList<String> list) {
+        this.listPubDate = list;
+    }
+
+    public ArrayList<String> getListPubDate() {
+        return listPubDate;
+    }
+
     public void setListImages(ArrayList<String> list) {
         this.listImages = list;
     }
@@ -39,19 +50,19 @@ public class HandleXML {
         return listDesc;
     }
 
-    private  void setListDesc(ArrayList<String> listDesc) {
-        this.listDesc = listDesc;
+    private void setListDesc(ArrayList<String> list) {
+        this.listDesc = list;
     }
 
     public ArrayList<String> getListTitles() {
         return listTitles;
     }
 
-    private  void setListTitle(ArrayList<String> list) {
+    private void setListTitle(ArrayList<String> list) {
         this.listTitles = list;
     }
 
-    private  void parseXMLAndStoreIt(XmlPullParser myParser) {
+    private void parseXMLAndStoreIt(XmlPullParser myParser) {
         int event;
         String text = null;
         try {
@@ -68,16 +79,17 @@ public class HandleXML {
                         if (name.equals("title")) {
                             listTitles.add(text);
                             setListTitle(listTitles);
-                            newsTitles++;
-//
+                            countTitles++;
+                        } else if (name.equals("pubDate")) {
+                            listPubDate.add(dateParser(text));
+                            setListPubDate(listPubDate);
+                            countPubDate++;
                         } else if (name.equals("description")) {
 //                            listDesc.add(TransformHTMLText.br2nl(text));
                             listDesc.add(TransformHTMLText.html2text(text));
                             setListDesc(listDesc);
-                            newsDescriptions++;
+                            countDescriptions++;
                         }
-//                        else {
-//                        }
                         break;
                 }
                 event = myParser.next();

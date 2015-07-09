@@ -20,16 +20,17 @@ import adelgrimm.sckw_news_ticker.dataModel.HandleXML;
  */
 public class DownloadService extends IntentService {
 
-    private  static final String PARAM_TITLES_VAL = "Titles";
-    private  static final String PARAM_DESCRIPTION_VAL = "Description";
+    private static final String PARAM_TITLES_VAL = "Titles";
+    private static final String PARAM_DESCRIPTION_VAL = "Description";
+    private static final String PARAM_PUB_DATE_VAL = "PublishedDate";
 
 
     public static final int STATUS_RUNNING = 0;
     public static final int STATUS_FINISHED = 1;
     public static final int STATUS_ERROR = 2;
     private static final String TAG = "DownloadService";
-    private static int itemTitlesSize, itemDescriptionsSize, itemImagesSize;
-    private ArrayList<String> itemImages, itemDescriptions, itemTitles;
+    private static int itemTitlesSize, itemDescriptionsSize, itemImagesSize, itemPubDateSize;
+    private ArrayList<String> itemImages, itemDescriptions, itemTitles, itemPubDate;
 
 
     public DownloadService() {
@@ -62,14 +63,17 @@ public class DownloadService extends IntentService {
                     Map<String, ArrayList<String>> map = downloadData(s);
                     ArrayList<String> resultTitles = map.get(PARAM_TITLES_VAL);
                     ArrayList<String> resultDescription = map.get(PARAM_DESCRIPTION_VAL);
+                    ArrayList<String> resultPublishDate = map.get(PARAM_PUB_DATE_VAL);
 
 
                     Log.d("onHandleIntent", "resultTitles = " + resultTitles);
                     /* Sending result back to activity */
 
                     if (null != resultTitles && resultTitles.size() > 0) {
+                        // put StringArrays to Bundle for SplashScreen
                         bundle.putStringArrayList("resultTitle", resultTitles);
                         bundle.putStringArrayList("resultDescription", resultDescription);
+                        bundle.putStringArrayList("resultPublishDate", resultPublishDate);
 
                         // Gebe dem receiver einen Schluessel mit um in SplashScreen die News voneinander zu trennen fuer die verschiedenen Views/Fragmente NEWS
                         if (s.equals(url[0])) {
@@ -103,15 +107,20 @@ public class DownloadService extends IntentService {
             // ListView Clicked item index
             itemTitlesSize = handleXML.getListTitles().size();
             itemDescriptionsSize = handleXML.getListDesc().size();
+            itemPubDateSize = handleXML.getListDesc().size();
+
             itemTitles = handleXML.getListTitles();
             itemDescriptions = handleXML.getListDesc();
-            itemImages = handleXML.getListImages();
+//            itemImages = handleXML.getListImages();
+            itemPubDate = handleXML.getListPubDate();
         }
 
 
         Map<String, ArrayList<String>> map = new HashMap();
         map.put(PARAM_TITLES_VAL, itemTitles);
         map.put(PARAM_DESCRIPTION_VAL, itemDescriptions);
+        map.put(PARAM_PUB_DATE_VAL, itemPubDate);
+
 
         return map;
     }

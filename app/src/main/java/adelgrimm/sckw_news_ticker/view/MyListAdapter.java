@@ -31,6 +31,7 @@ public class MyListAdapter extends ArrayAdapter {
     private class ViewHolder {
         TextView titleText;
         TextView subTitleText;
+        TextView pubDateText;
     }
 
     /**
@@ -57,6 +58,7 @@ public class MyListAdapter extends ArrayAdapter {
             holder = new ViewHolder();
             holder.titleText = (TextView) viewToUse.findViewById(R.id.titleTextView);
             holder.subTitleText = (TextView) viewToUse.findViewById(R.id.subTitleTextView);
+            holder.pubDateText = (TextView) viewToUse.findViewById(R.id.pubDateTextView);
             viewToUse.setTag(holder);
         } else {
             viewToUse = convertView;
@@ -65,6 +67,7 @@ public class MyListAdapter extends ArrayAdapter {
 
         holder.titleText.setText(item.getItemTitle());
         holder.subTitleText.setText(item.getItemSubTitle());
+        holder.pubDateText.setText(item.getItemPubDate());
         return viewToUse;
     }
 }

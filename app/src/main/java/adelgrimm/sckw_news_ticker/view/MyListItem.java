@@ -5,7 +5,7 @@ package adelgrimm.sckw_news_ticker.view;
  */
 public class MyListItem {
 
-    private String itemTitle, itemSubTitle;
+    private String itemTitle, itemSubTitle, itemPubDate;
 
     public String getItemSubTitle() {
         return itemSubTitle;
@@ -23,8 +23,17 @@ public class MyListItem {
         this.itemTitle = itemTitle;
     }
 
-    public MyListItem(String title, String subTitle) {
+    public String getItemPubDate() {
+        return itemPubDate;
+    }
+
+    public void setItemPubDate(String itemPubDate) {
+        this.itemPubDate = itemPubDate;
+    }
+
+    public MyListItem(String title, String subTitle, String pubDate) {
         this.itemTitle = title;
         this.itemSubTitle = subTitle;
+        this.itemPubDate = pubDate;
     }
 }

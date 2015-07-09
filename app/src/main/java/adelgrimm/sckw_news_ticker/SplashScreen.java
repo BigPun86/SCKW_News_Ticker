@@ -25,7 +25,11 @@ public class SplashScreen extends Activity implements DownloadResultReceiver.Rec
     public static final String DESCRIPTIONS_VEREIN = "DESC_V";
     public static final String TITLES_JUNIOREN = "TITLES_J";
     public static final String DESCRIPTIONS_JUNIOREN = "DESC_J";
+    public static final String PUB_DATE_AKTIVE = "PUB_DATE_A";
+    public static final String PUB_DATE_VEREIN = "PUB_DATE_V";
+    public static final String PUB_DATE_JUNIOREN = "PUB_DATE_J";
     private boolean loading = false;
+
     // Splash screen timer
     private static final int SPLASH_TIME_OUT = 100;
     private static final String BLOG_AKTIVE_NEWS_URL = "http://www.sckw.de/rss/blog/Aktive";
@@ -38,8 +42,8 @@ public class SplashScreen extends Activity implements DownloadResultReceiver.Rec
     private final Handler handler = new Handler();
     private DownloadResultReceiver mReceiver;
     private String size;
-    private String[] titlesArray, descArray;
-    private String[] titlesForAktive, textForAktive, titlesForVerein, textForVerein, titlesForJunioren, textForJunioren;
+    private String[] titlesArray, descArray, pubDateArray;
+    private String[] titlesForAktive, textForAktive, pubDateForAktive, titlesForVerein, textForVerein, pubDateForVerein, titlesForJunioren, textForJunioren, pubDateForJunioren;
     private int newsKey;
 
     @Override
@@ -112,8 +116,10 @@ public class SplashScreen extends Activity implements DownloadResultReceiver.Rec
                 /* Hide progress & extract result from bundle */
                 setProgressBarIndeterminateVisibility(false);
 
+                // get Bundle from Service
                 titlesArray = resultData.getStringArrayList("resultTitle").toArray(new String[resultData.getStringArrayList("resultTitle").size()]);
                 descArray = resultData.getStringArrayList("resultDescription").toArray(new String[resultData.getStringArrayList("resultDescription").size()]);
+                pubDateArray = resultData.getStringArrayList("resultPublishDate").toArray(new String[resultData.getStringArrayList("resultPublishDate").size()]);
                 newsKey = resultData.getInt("newsKey");
 
 
@@ -123,28 +129,38 @@ public class SplashScreen extends Activity implements DownloadResultReceiver.Rec
                         // News for AktiveNewsFragment
                         titlesForAktive = titlesArray;
                         textForAktive = descArray;
+                        pubDateForAktive = pubDateArray;
                         break;
                     case 2:
                         // News for VereinNewsFragment
                         titlesForVerein = titlesArray;
                         textForVerein = descArray;
+                        pubDateForVerein = pubDateArray;
                         break;
                     case 3:
                         // News for JuniorenNewsFragment
                         titlesForJunioren = titlesArray;
                         textForJunioren = descArray;
+                        pubDateForJunioren = pubDateArray;
                         break;
                 }
 
                 // Newskey is only 3 when all news have bin fetched from Service, Then put in Bundle
                 if (newsKey == 3) {
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
+
                     i.putExtra(TITLES_AKTIVE, titlesForAktive);
                     i.putExtra(DESCRIPTIONS_AKTIVE, textForAktive);
+                    i.putExtra(PUB_DATE_AKTIVE, pubDateForAktive);
+
                     i.putExtra(TITLES_VEREIN, titlesForVerein);
                     i.putExtra(DESCRIPTIONS_VEREIN, textForVerein);
+                    i.putExtra(PUB_DATE_VEREIN, pubDateForVerein);
+
                     i.putExtra(TITLES_JUNIOREN, titlesForJunioren);
                     i.putExtra(DESCRIPTIONS_JUNIOREN, textForJunioren);
+                    i.putExtra(PUB_DATE_JUNIOREN, pubDateForJunioren);
+
                     startActivity(i);
                 }
 

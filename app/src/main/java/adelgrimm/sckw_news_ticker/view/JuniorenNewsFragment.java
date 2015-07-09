@@ -1,5 +1,6 @@
 package adelgrimm.sckw_news_ticker.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -27,7 +28,7 @@ public class JuniorenNewsFragment extends Fragment implements AbsListView.OnItem
     // TODO: For TheNews!!!!
 //    private OnFragmentInteractionListener mListener;
 
-    String[] titles, text;
+    String[] titles, text, pubDate;
     /**
      * The fragment's ListView/GridView.
      */
@@ -50,18 +51,19 @@ public class JuniorenNewsFragment extends Fragment implements AbsListView.OnItem
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         listItemList = new ArrayList();
-        if (((MainActivity) getActivity()).getTitlesForJunioren() != null && ((MainActivity) getActivity()).getTextForJunioren() != null) {
+        if (((MainActivity) getActivity()).getTitlesForJunioren() != null && ((MainActivity) getActivity()).getTextForJunioren() != null &&((MainActivity) getActivity()).getPubDateForJunioren() != null) {
             titles = ((MainActivity) getActivity()).getTitlesForJunioren();
             text = ((MainActivity) getActivity()).getTextForJunioren();
+            pubDate = ((MainActivity) getActivity()).getPubDateForJunioren();
             setupListView();
         } else {
-            listItemList.add(new MyListItem("Loading...", "Swipe Down for Update"));
+            listItemList.add(new MyListItem("Loading...", "Swipe Down for Update", "09-Jul-2015"));
         }
     }
 
     private void setupListView() {
         for (int i = 0; i < titles.length; i++) {
-            listItemList.add(new MyListItem(titles[i], (text[i]).substring(0, 75) + "..."));
+            listItemList.add(new MyListItem(titles[i], (text[i]).substring(0, 75) + "...", pubDate[i]));
         }
         mAdapter = new MyListAdapter(getActivity(), listItemList);
     }
@@ -85,6 +87,11 @@ public class JuniorenNewsFragment extends Fragment implements AbsListView.OnItem
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         MyListItem item = (MyListItem) this.listItemList.get(position);
         Toast.makeText(getActivity(), item.getItemTitle() + " Clicked!", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(getActivity(), TheNews.class);
+        intent.putExtra("TIT", titles[position]);
+        intent.putExtra("TXT", text[position]);
+        startActivity(intent);
     }
 
 
