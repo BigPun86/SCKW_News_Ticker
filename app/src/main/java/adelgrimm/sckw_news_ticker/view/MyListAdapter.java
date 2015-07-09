@@ -17,8 +17,8 @@ import adelgrimm.sckw_news_ticker.R;
  */
 public class MyListAdapter extends ArrayAdapter {
 
-    private Context context;
-    private boolean useList = true;
+    private final Context context;
+    private final boolean useList = true;
 
     public MyListAdapter(Context context, List items) {
         super(context, android.R.layout.simple_list_item_1, items);

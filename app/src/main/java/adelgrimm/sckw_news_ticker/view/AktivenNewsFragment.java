@@ -8,13 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import adelgrimm.sckw_news_ticker.MainActivity.MainActivity;
+import adelgrimm.sckw_news_ticker.mainActivity.MainActivity;
 import adelgrimm.sckw_news_ticker.R;
 
 /**
@@ -37,6 +38,7 @@ public class AktivenNewsFragment extends Fragment implements AbsListView.OnItemC
      * The fragment's ListView/GridView.
      */
     private AbsListView mListView;
+//    private AbsListView mListView;
     /**
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
@@ -76,8 +78,8 @@ public class AktivenNewsFragment extends Fragment implements AbsListView.OnItemC
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
 
         // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
-        mListView.setAdapter(mAdapter);
+        mListView = (ListView) view.findViewById(android.R.id.list);
+        ((ListView) mListView).setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);

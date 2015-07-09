@@ -20,15 +20,15 @@ import adelgrimm.sckw_news_ticker.dataModel.HandleXML;
  */
 public class DownloadService extends IntentService {
 
-    public static final String PARAM_TITLES_VAL = "Titles";
-    public static final String PARAM_DESCRIPTION_VAL = "Description";
+    private  static final String PARAM_TITLES_VAL = "Titles";
+    private  static final String PARAM_DESCRIPTION_VAL = "Description";
 
 
     public static final int STATUS_RUNNING = 0;
     public static final int STATUS_FINISHED = 1;
     public static final int STATUS_ERROR = 2;
     private static final String TAG = "DownloadService";
-    static int itemTitlesSize, itemDescriptionsSize, itemImagesSize;
+    private static int itemTitlesSize, itemDescriptionsSize, itemImagesSize;
     private ArrayList<String> itemImages, itemDescriptions, itemTitles;
 
 

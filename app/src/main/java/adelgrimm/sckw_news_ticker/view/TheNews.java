@@ -18,7 +18,7 @@ public class TheNews extends FragmentActivity {
     // get Image would be great!!!!
     // Show News nice formatted
 
-    TextView titleView, textView;
+    private TextView titleView, textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

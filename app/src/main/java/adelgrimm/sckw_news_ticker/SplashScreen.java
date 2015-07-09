@@ -9,10 +9,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import adelgrimm.sckw_news_ticker.MainActivity.MainActivity;
-import adelgrimm.sckw_news_ticker.dataModel.DataObjectContainer;
 import adelgrimm.sckw_news_ticker.intentService.DownloadResultReceiver;
 import adelgrimm.sckw_news_ticker.intentService.DownloadService;
+import adelgrimm.sckw_news_ticker.mainActivity.MainActivity;
 
 
 /**
@@ -26,17 +25,17 @@ public class SplashScreen extends Activity implements DownloadResultReceiver.Rec
     public static final String DESCRIPTIONS_VEREIN = "DESC_V";
     public static final String TITLES_JUNIOREN = "TITLES_J";
     public static final String DESCRIPTIONS_JUNIOREN = "DESC_J";
-    static boolean loading = false;
+    private boolean loading = false;
     // Splash screen timer
-    private static int SPLASH_TIME_OUT = 100;
-    private static String BLOG_AKTIVE_NEWS_URL = "http://www.sckw.de/rss/blog/Aktive";
-    private static String BLOG_VEREIN_NEWS_URL = "http://www.sckw.de/rss/blog/Verein";
-    private static String BLOG_JUNIOREN_NEWS_URL = "http://www.sckw.de/rss/blog/Junioren";
-    DataObjectContainer dataObjectContainer;
+    private static final int SPLASH_TIME_OUT = 100;
+    private static final String BLOG_AKTIVE_NEWS_URL = "http://www.sckw.de/rss/blog/Aktive";
+    private static final String BLOG_VEREIN_NEWS_URL = "http://www.sckw.de/rss/blog/Verein";
+    private static final String BLOG_JUNIOREN_NEWS_URL = "http://www.sckw.de/rss/blog/Junioren";
+
     private ProgressBar progressBar;
     private int progressStatus = 0;
     private TextView textView;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
     private DownloadResultReceiver mReceiver;
     private String size;
     private String[] titlesArray, descArray;

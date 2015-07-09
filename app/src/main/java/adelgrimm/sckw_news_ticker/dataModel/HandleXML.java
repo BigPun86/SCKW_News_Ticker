@@ -16,10 +16,10 @@ import java.util.ArrayList;
 
 public class HandleXML {
     public volatile boolean parsingComplete = true;
-    int newsTitles, newsDescriptions, newsImage = 0;
-    ArrayList<String> listTitles = new ArrayList<String>();
-    ArrayList<String> listDesc = new ArrayList<String>();
-    ArrayList<String> listImages = new ArrayList<String>();
+    private int newsTitles, newsDescriptions, newsImage = 0;
+    private ArrayList<String> listTitles = new ArrayList<String>();
+    private ArrayList<String> listDesc = new ArrayList<String>();
+    private ArrayList<String> listImages = new ArrayList<String>();
     private String urlString = null;
     private XmlPullParserFactory xmlFactoryObject;
 
@@ -39,7 +39,7 @@ public class HandleXML {
         return listDesc;
     }
 
-    public void setListDesc(ArrayList<String> listDesc) {
+    private  void setListDesc(ArrayList<String> listDesc) {
         this.listDesc = listDesc;
     }
 
@@ -47,11 +47,11 @@ public class HandleXML {
         return listTitles;
     }
 
-    public void setListTitle(ArrayList<String> list) {
+    private  void setListTitle(ArrayList<String> list) {
         this.listTitles = list;
     }
 
-    public void parseXMLAndStoreIt(XmlPullParser myParser) {
+    private  void parseXMLAndStoreIt(XmlPullParser myParser) {
         int event;
         String text = null;
         try {
