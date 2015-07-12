@@ -56,6 +56,7 @@ public class AktivenNewsFragment extends Fragment implements AbsListView.OnItemC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         listItemList = new ArrayList();
         if (((MainActivity) getActivity()).getTitlesForAktive() != null && ((MainActivity) getActivity()).getTextForAktive() != null && ((MainActivity) getActivity()).getPubDateForAktive() != null) {
             titles = ((MainActivity) getActivity()).getTitlesForAktive();
@@ -72,6 +73,7 @@ public class AktivenNewsFragment extends Fragment implements AbsListView.OnItemC
             listItemList.add(new MyListItem(titles[i], (text[i]).substring(0, 75) + "...", pubDate[i]));
         }
         mAdapter = new MyListAdapter(getActivity(), listItemList);
+
     }
 
     @Override
@@ -80,14 +82,19 @@ public class AktivenNewsFragment extends Fragment implements AbsListView.OnItemC
 
         // Set the adapter
         mListView = (ListView) view.findViewById(android.R.id.list);
-        ((ListView) mListView).setAdapter(mAdapter);
 
-        // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
 
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        ((ListView) mListView).setAdapter(mAdapter);
+
+        // Set OnItemClickListener so we can be notified on item clicks
+        mListView.setOnItemClickListener(this);
+    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

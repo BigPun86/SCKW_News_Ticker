@@ -51,7 +51,7 @@ public class JuniorenNewsFragment extends Fragment implements AbsListView.OnItem
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         listItemList = new ArrayList();
-        if (((MainActivity) getActivity()).getTitlesForJunioren() != null && ((MainActivity) getActivity()).getTextForJunioren() != null &&((MainActivity) getActivity()).getPubDateForJunioren() != null) {
+        if (((MainActivity) getActivity()).getTitlesForJunioren() != null && ((MainActivity) getActivity()).getTextForJunioren() != null && ((MainActivity) getActivity()).getPubDateForJunioren() != null) {
             titles = ((MainActivity) getActivity()).getTitlesForJunioren();
             text = ((MainActivity) getActivity()).getTextForJunioren();
             pubDate = ((MainActivity) getActivity()).getPubDateForJunioren();
@@ -74,12 +74,17 @@ public class JuniorenNewsFragment extends Fragment implements AbsListView.OnItem
 
         // Set the adapter
         mListView = (ListView) view.findViewById(android.R.id.list);
-        mListView.setAdapter(mAdapter);
+
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ((ListView) mListView).setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
-
-        return view;
     }
 
 

@@ -25,6 +25,7 @@ public class DownloadService extends IntentService {
     private static final String PARAM_PUB_DATE_VAL = "PublishedDate";
 
 
+
     public static final int STATUS_RUNNING = 0;
     public static final int STATUS_FINISHED = 1;
     public static final int STATUS_ERROR = 2;
@@ -124,6 +125,7 @@ public class DownloadService extends IntentService {
 
         return map;
     }
+
 
 
 }

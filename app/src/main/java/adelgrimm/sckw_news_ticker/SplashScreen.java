@@ -1,7 +1,9 @@
 package adelgrimm.sckw_news_ticker;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -11,13 +13,14 @@ import android.widget.Toast;
 
 import adelgrimm.sckw_news_ticker.intentService.DownloadResultReceiver;
 import adelgrimm.sckw_news_ticker.intentService.DownloadService;
+import adelgrimm.sckw_news_ticker.intentService.DownloadServiceInterface;
 import adelgrimm.sckw_news_ticker.mainActivity.MainActivity;
 
 
 /**
  * Created by Adel on 05.07.2015.
  */
-public class SplashScreen extends Activity implements DownloadResultReceiver.Receiver {
+public class SplashScreen extends Activity implements DownloadResultReceiver.Receiver, DownloadServiceInterface {
 
     public static final String TITLES_AKTIVE = "TITLES_A";
     public static final String DESCRIPTIONS_AKTIVE = "DESC_A";
@@ -32,15 +35,11 @@ public class SplashScreen extends Activity implements DownloadResultReceiver.Rec
 
     // Splash screen timer
     private static final int SPLASH_TIME_OUT = 100;
-    private static final String BLOG_AKTIVE_NEWS_URL = "http://www.sckw.de/rss/blog/Aktive";
-    private static final String BLOG_VEREIN_NEWS_URL = "http://www.sckw.de/rss/blog/Verein";
-    private static final String BLOG_JUNIOREN_NEWS_URL = "http://www.sckw.de/rss/blog/Junioren";
 
     private ProgressBar progressBar;
     private int progressStatus = 0;
     private TextView textView;
     private final Handler handler = new Handler();
-    private DownloadResultReceiver mReceiver;
     private String size;
     private String[] titlesArray, descArray, pubDateArray;
     private String[] titlesForAktive, textForAktive, pubDateForAktive, titlesForVerein, textForVerein, pubDateForVerein, titlesForJunioren, textForJunioren, pubDateForJunioren;
@@ -53,7 +52,16 @@ public class SplashScreen extends Activity implements DownloadResultReceiver.Rec
         setContentView(R.layout.splashscreen);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
-        downloadDataService();
+        //checking if WiFi is activated on your System
+        if (isWifiOn()) {
+            downloadDataService();
+        }
+        //if not than turn on and after taht download service
+        else {
+            turnOnWifi();
+            downloadDataService();
+        }
+
 
         // Start long running operation in a background thread
         new Thread(new Runnable() {
@@ -85,9 +93,23 @@ public class SplashScreen extends Activity implements DownloadResultReceiver.Rec
 
     }
 
-    private void downloadDataService() {
+    @Override
+    public boolean isWifiOn() {
+        WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        return wifi.isWifiEnabled();
+
+    }
+
+    @Override
+    public void turnOnWifi() {
+
+        WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        wifi.setWifiEnabled(true);
+    }
+
+    @Override
+    public void downloadDataService() {
     /* Starting Download Service */
-        mReceiver = new DownloadResultReceiver(new Handler());
         mReceiver.setReceiver(this);
         Intent intent = new Intent(Intent.ACTION_SYNC, null, SplashScreen.this, DownloadService.class);
 

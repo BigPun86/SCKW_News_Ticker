@@ -18,17 +18,17 @@ import adelgrimm.sckw_news_ticker.view.VereinNewsFragment;
 /**
  * Created by Adel on 06.07.2015.
  */
-public class NewsFragment extends Fragment {
+public class NewsFragmentTabHost extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private FragmentTabHost mTabHost;
 
     //Mandatory Constructor
-    public NewsFragment() {
+    public NewsFragmentTabHost() {
     }
 
-    public NewsFragment newInstance(int sectionNumber) {
-        NewsFragment fragment = new NewsFragment();
+    public NewsFragmentTabHost newInstance(int sectionNumber) {
+        NewsFragmentTabHost fragment = new NewsFragmentTabHost();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
@@ -42,15 +42,6 @@ public class NewsFragment extends Fragment {
         }
     }
 
-    // kind of Adapter to inflate the TabHost View, especially the Indicator ....
-    private View getTabIndicator(Context context, int title, int icon) {
-        View view = LayoutInflater.from(context).inflate(R.layout.tab_layout, null);
-        ImageView iv = (ImageView) view.findViewById(R.id.imageView);
-        iv.setImageResource(icon);
-        TextView tv = (TextView) view.findViewById(R.id.textView);
-        tv.setText(title);
-        return view;
-    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -59,14 +50,21 @@ public class NewsFragment extends Fragment {
         mTabHost = (FragmentTabHost) rootView.findViewById(android.R.id.tabhost);
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
         // Setup TabsContent Fragments
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentb").setIndicator(getTabIndicator(mTabHost.getContext(),
-                R.string.tab_title_aktive, R.drawable.ic_sckw_logo_ball)), AktivenNewsFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator(getTabIndicator(mTabHost.getContext(),
-                R.string.tab_title_verein, R.drawable.ic_sckw_logo_ball)), VereinNewsFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator(getTabIndicator(mTabHost.getContext(),
-                R.string.tab_title_junioren, R.drawable.ic_sckw_logo_ball)), JuniorenNewsFragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentb").setIndicator(getTabIndicator(mTabHost.getContext(), R.string.tab_title_aktive, R.drawable.ic_sckw_logo_ball)), AktivenNewsFragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator(getTabIndicator(mTabHost.getContext(), R.string.tab_title_verein, R.drawable.ic_sckw_logo_ball)), VereinNewsFragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator(getTabIndicator(mTabHost.getContext(), R.string.tab_title_junioren, R.drawable.ic_sckw_logo_ball)), JuniorenNewsFragment.class, null);
 
         return rootView;
+    }
+
+    // kind of Adapter to inflate the TabHost View, especially the Indicator ....
+    private View getTabIndicator(Context context, int title, int icon) {
+        View view = LayoutInflater.from(context).inflate(R.layout.tab_layout, null);
+        ImageView iv = (ImageView) view.findViewById(R.id.imageView);
+        iv.setImageResource(icon);
+        TextView tv = (TextView) view.findViewById(R.id.textView);
+        tv.setText(title);
+        return view;
     }
 
 

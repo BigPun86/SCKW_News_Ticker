@@ -82,6 +82,14 @@ public class VereinNewsFragment extends Fragment implements AbsListView.OnItemCl
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        ((ListView) mListView).setAdapter(mAdapter);
+
+        // Set OnItemClickListener so we can be notified on item clicks
+        mListView.setOnItemClickListener(this);
+    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
